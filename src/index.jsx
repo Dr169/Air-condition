@@ -9,13 +9,13 @@ import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ApolloProvider client={client}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
-  </ApolloProvider>
+  // <ApolloProvider client={client}>
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+  // </ApolloProvider>
 );
 
 reportWebVitals();
