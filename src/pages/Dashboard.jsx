@@ -11,6 +11,9 @@ export const Dashboard = () => {
         }}
       >
         <CssBaseline />
+        <Box sx={{ width: "100px", height: "100px" }}>
+          <h1>hiiiii</h1>
+        </Box>
       </Grid>
     </HeaderFooter>
   );

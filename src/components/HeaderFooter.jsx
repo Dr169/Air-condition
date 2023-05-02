@@ -33,7 +33,6 @@ export const HeaderFooter = (props) => {
     };
   }, [screenSize]);
 
-  console.log(screenSize.height);
   return (
     <>
       <Box

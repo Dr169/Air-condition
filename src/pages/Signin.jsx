@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useFormik } from "formik";
 
 import {
@@ -19,20 +19,71 @@ import {
 import { Box } from "@mui/system";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Snackbar from "@mui/material/Snackbar";
+import CloseIcon from "@mui/icons-material/Close";
+import MuiAlert from "@mui/material/Alert";
+
+import { gql, useMutation } from "@apollo/client";
 
 import { loginSchema } from "../utils/schema";
 import { HeaderFooter } from "../components/HeaderFooter";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
   password: "",
 };
 
-const onSubmit = (values) => {
-  alert(JSON.stringify(values, null, 2));
-};
+const Login = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
 
 export const SignIn = () => {
+  const navigate = useNavigate();
+
+  const [openError, setOpenError] = useState(false);
+  const [openSuccess, setopenSuccess] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+    setopenSuccess(false);
+  };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
+
+  const onSubmit = async (values) => {
+    const { data } = await login({
+      variables: { email: values.email, password: values.password },
+    });
+
+    if (data.login.token) {
+      setopenSuccess(true);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 3000);
+    } else {
+      setOpenError(true);
+    }
+  };
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: loginSchema,
@@ -40,6 +91,8 @@ export const SignIn = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const [login] = useMutation(Login);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -245,6 +298,40 @@ export const SignIn = () => {
             style={{ width: "100%", height: "100%" }}
           />
         </Box>
+        <Snackbar
+          open={openError}
+          autoHideDuration={2000}
+          onClose={handleClose}
+          message="Note archived"
+          action={action}
+        >
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            ورود ناموفق. نام کاربری یا رمز عبور نامعتبر است!
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar
+          open={openSuccess}
+          autoHideDuration={2000}
+          onClose={handleClose}
+          message="Note archived"
+          action={action}
+        >
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            ورود با موفقیت انجام شد.
+          </MuiAlert>
+        </Snackbar>
       </Grid>
     </HeaderFooter>
   );
