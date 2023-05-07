@@ -12,7 +12,8 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { SignIn } from "./pages/Signin";
 import { Dashboard } from "./pages/Dashboard";
 import { theme } from "./Theme";
-import { Layout } from "./components/Layout"
+import { Layout } from "./components/Layout";
+import { Users } from "./pages/Users";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -26,12 +27,26 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/dashboard" element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          } />
-          <Route path="*" element={<h1 style={{ color: "red" }}>Not Found</h1>} />
+          <Route
+            path="/dashboard"
+            element={
+              <Layout>
+                <Dashboard />
+              </Layout>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <Layout>
+                <Users />
+              </Layout>
+            }
+          />
+          <Route
+            path="*"
+            element={<h1 style={{ color: "red" }}>Not Found</h1>}
+          />
         </Routes>
       </ThemeProvider>
     </CacheProvider>

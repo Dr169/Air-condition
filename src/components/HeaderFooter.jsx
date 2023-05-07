@@ -15,6 +15,7 @@ const SOCIAL_MEDIA = [
 
 const getCurrentDimension = () => {
   return {
+    width: window.innerWidth,
     height: window.innerHeight,
   };
 };
@@ -42,10 +43,9 @@ export const HeaderFooter = (props) => {
           width: "100%",
           height: "70px",
           justifyContent: "center",
-          boxShadow: "0px 3px 10px 0px #999",
         }}
       >
-        <Link href="#">
+        <Link href="http://localhost:3000/">
           <img src="images/logo.png" alt="Logo" style={{ width: "70px" }} />
         </Link>
       </Box>
@@ -64,9 +64,11 @@ export const HeaderFooter = (props) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow: "0px -3px 10px 0px #999",
           width: "100%",
           height: "70px",
+          boxShadow: "0px -3px 10px 0px #999",
+          position: "relative",
+          zIndex: 999,
         }}
       >
         <Box

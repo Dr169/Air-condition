@@ -1,4 +1,5 @@
 import { useState, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
 import {
@@ -27,7 +28,6 @@ import { gql, useMutation } from "@apollo/client";
 
 import { loginSchema } from "../utils/schema";
 import { HeaderFooter } from "../components/HeaderFooter";
-import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -38,6 +38,9 @@ const Login = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
+      user {
+        id
+      }
     }
   }
 `;
@@ -73,12 +76,13 @@ export const SignIn = () => {
     const { data } = await login({
       variables: { email: values.email, password: values.password },
     });
-
-    if (data.login.token) {
+    if (data?.login?.token) {
       setopenSuccess(true);
       setTimeout(() => {
+        localStorage.setItem("token", `${data.login.token}`);
+        localStorage.setItem("id", `${data.login.user.id}`);
         navigate("/dashboard");
-      }, 3000);
+      }, 2200);
     } else {
       setOpenError(true);
     }
