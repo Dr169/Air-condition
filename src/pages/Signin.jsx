@@ -73,6 +73,7 @@ export const SignIn = () => {
   );
 
   const onSubmit = async (values) => {
+    console.log(values);
     const { data } = await login({
       variables: { email: values.email, password: values.password },
     });
@@ -158,7 +159,7 @@ export const SignIn = () => {
                   px: { xs: 3, md: 8 },
                 }}
               >
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={onSubmit}>
                   <TextField
                     helperText={
                       formik.touched.email && formik.errors.email ? (
