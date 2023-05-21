@@ -1,35 +1,10 @@
-import { useEffect } from "react";
-import { RadialGauge } from "react-canvas-gauges";
-
 import Box from "@mui/material/Box";
 import { CssBaseline, Grid } from "@mui/material";
 
-import { gql, useQuery } from "@apollo/client";
-
 import { Drawer } from "../components/Drawer";
-import { SetUserInfo } from "../components/Drawer";
-import { SetTempHistory } from "../components/Drawer";
-import { SetRadialGauge } from "../components/Drawer";
-
-const GetUserInfo = gql`
-  query getUser($id: ID!) {
-    user(id: $id) {
-      lastLogin
-      firstName
-      lastName
-      email
-      phoneNumber
-      admin
-      department {
-        name
-        devices {
-          id
-          temperature
-        }
-      }
-    }
-  }
-`;
+import { SetUserInfo } from "../components/SetUserInfo";
+import { SetTempHistory } from "../components/SetTempHistory";
+import { SetRadialGauge } from "../components/SetRadialGauge";
 
 export const Dashboard = () => {
   return (

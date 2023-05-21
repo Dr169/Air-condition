@@ -1,8 +1,34 @@
+import { useEffect } from "react";
 import Chart from "react-apexcharts";
 
 import Card from "@mui/material/Card";
+import { Box } from "@mui/material";
 
-const SetTempHistory = () => {
+import { gql, useQuery } from "@apollo/client";
+
+const GetUserInfo = gql`
+  query getUser($id: ID!) {
+    user(id: $id) {
+      lastLogin
+      firstName
+      lastName
+      email
+      phoneNumber
+      admin
+      department {
+        name
+        devices {
+          id
+          temperature
+        }
+      }
+    }
+  }
+`;
+
+export const SetTempHistory = () => {
+  const id = localStorage.getItem("id");
+
   const { data, loading, error, startPolling, stopPolling } = useQuery(
     GetUserInfo,
     {

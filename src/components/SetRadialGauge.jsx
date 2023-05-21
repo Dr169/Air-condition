@@ -1,6 +1,33 @@
-const id = localStorage.getItem("id");
+import { useEffect } from "react";
+import { RadialGauge } from "react-canvas-gauges";
 
-const SetRadialGauge = () => {
+import { Box } from "@mui/material";
+
+import { gql, useQuery } from "@apollo/client";
+
+const GetUserInfo = gql`
+  query getUser($id: ID!) {
+    user(id: $id) {
+      lastLogin
+      firstName
+      lastName
+      email
+      phoneNumber
+      admin
+      department {
+        name
+        devices {
+          id
+          temperature
+        }
+      }
+    }
+  }
+`;
+
+export const SetRadialGauge = () => {
+  const id = localStorage.getItem("id");
+
   const { data, loading, error, startPolling, stopPolling } = useQuery(
     GetUserInfo,
     {
