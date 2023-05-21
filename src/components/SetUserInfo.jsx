@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+
+import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -6,7 +9,31 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 
+import { gql, useQuery } from "@apollo/client";
+
+const GetUserInfo = gql`
+  query getUser($id: ID!) {
+    user(id: $id) {
+      lastLogin
+      firstName
+      lastName
+      email
+      phoneNumber
+      admin
+      department {
+        name
+        devices {
+          id
+          temperature
+        }
+      }
+    }
+  }
+`;
+
 export const SetUserInfo = () => {
+  const id = localStorage.getItem("id");
+
   const { data, loading, error, startPolling, stopPolling } = useQuery(
     GetUserInfo,
     {
