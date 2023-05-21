@@ -41,4 +41,4 @@ To run this project, you need to have the following requirements:
 
 To use this project, you need to have access to the website and the chiller device. You can view the current status and settings of the chiller device on the homepage of the website. You can also change the settings by clicking on the buttons or sliders on the website. The changes will be sent to the remote chipset and applied to the chiller device. You will receive alerts and notifications on the website if there are any errors or malfunctions of the chiller device.
 
-!("jjj")[C:/Users/Acer/OneDrive/Pictures/Screenshots/Screenshot (16).png]
+!["sign in demo"](C:/Users/Acer/OneDrive/Pictures/Screenshots/Screenshot (16).png)
